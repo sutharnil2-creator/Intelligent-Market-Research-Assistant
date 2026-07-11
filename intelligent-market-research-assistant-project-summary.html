@@ -1,0 +1,317 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Intelligent Market Research Assistant</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f172a; color: #f1f5f9; font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; padding: 32px 16px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .subtitle { color: #94a3b8; font-size: 13px; margin-bottom: 28px; }
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .4px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 28px; }
+  .b-blue { background: #1e3a5f; color: #93c5fd; }
+  .b-green { background: #064e3b; color: #6ee7b7; }
+  .b-purple { background: #2e1065; color: #c4b5fd; }
+  .b-orange { background: #431407; color: #fdba74; }
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #1e293b; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 14px; }
+  .card h3 { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+  .card p { font-size: 12px; color: #94a3b8; line-height: 1.5; }
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { font-size: 12px; color: #cbd5e1; padding: 2px 0; }
+  .card ul li::before { content: "•"; color: #3b82f6; margin-right: 6px; }
+  .file-tree { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 16px; font-family: "Courier New", monospace; font-size: 12px; color: #94a3b8; line-height: 1.8; overflow-x: auto; }
+  .file-tree .dir { color: #93c5fd; font-weight: 600; }
+  .file-tree .file { color: #e2e8f0; }
+  .file-tree .comment { color: #475569; }
+  .arch-box { background: #0f172a; border: 1px solid #334155; border-radius: 10px; padding: 20px; text-align: center; margin-bottom: 12px; }
+  .arch-row { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+  .arch-pill { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 500; }
+  .arch-arrow { color: #475569; font-size: 16px; }
+  .api-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .api-table th { background: #1e293b; color: #94a3b8; padding: 8px 10px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+  .api-table td { padding: 7px 10px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+  .api-table tr:hover td { background: #1e293b55; }
+  .method { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .get { background: #14532d; color: #86efac; }
+  .post { background: #1e3a5f; color: #93c5fd; }
+  .put { background: #451a03; color: #fdba74; }
+  .delete { background: #450a0a; color: #fca5a5; }
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 14px; background: #0f172a; border-radius: 10px; border: 1px solid #334155; }
+  .flow-step { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 5px 10px; font-size: 11px; color: #e2e8f0; white-space: nowrap; }
+  .flow-arrow { color: #3b82f6; font-size: 14px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .feat { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; }
+  .feat .num { font-size: 18px; font-weight: 800; color: #3b82f6; margin-bottom: 2px; }
+  .feat .name { font-size: 12px; font-weight: 600; color: #e2e8f0; margin-bottom: 3px; }
+  .feat .desc { font-size: 11px; color: #64748b; }
+  code { background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 1px 5px; font-family: monospace; font-size: 11px; color: #93c5fd; }
+  .cred { background: #0f2035; border: 1px solid #1d4ed8; border-radius: 8px; padding: 12px 16px; font-size: 12px; }
+  .cred p { color: #93c5fd; margin: 2px 0; }
+  footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #1e293b; font-size: 12px; color: #475569; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>🧠 Intelligent Market Research Assistant</h1>
+  <p class="subtitle">Production-ready Full Stack AI Application for the IBM watsonx Hackathon</p>
+
+  <div class="badges">
+    <span class="badge b-blue">IBM watsonx.ai</span>
+    <span class="badge b-blue">IBM Granite 13B</span>
+    <span class="badge b-blue">IBM Orchestrate</span>
+    <span class="badge b-blue">IBM Cloud Object Storage</span>
+    <span class="badge b-green">FastAPI + Python</span>
+    <span class="badge b-green">React + TypeScript</span>
+    <span class="badge b-green">Tailwind CSS</span>
+    <span class="badge b-green">PostgreSQL</span>
+    <span class="badge b-purple">LangChain</span>
+    <span class="badge b-purple">ChromaDB (RAG)</span>
+    <span class="badge b-orange">Docker + Compose</span>
+    <span class="badge b-orange">Recharts</span>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">System Architecture</div>
+    <div class="arch-box">
+      <div class="arch-row">
+        <span class="arch-pill" style="background:#1d4ed820;border-color:#1d4ed8;color:#93c5fd">React Frontend (Vite + Tailwind)</span>
+      </div>
+      <div class="arch-arrow">↕ REST API (JWT)</div>
+      <div class="arch-row">
+        <span class="arch-pill" style="border-color:#334155">FastAPI Backend (Async)</span>
+        <span class="arch-arrow">→</span>
+        <span class="arch-pill" style="background:#1d4ed820;border-color:#1d4ed8;color:#93c5fd">IBM watsonx.ai</span>
+      </div>
+      <div class="arch-arrow">↕</div>
+      <div class="arch-row">
+        <span class="arch-pill">PostgreSQL</span>
+        <span class="arch-pill" style="background:#7c3aed20;border-color:#7c3aed;color:#c4b5fd">ChromaDB</span>
+        <span class="arch-pill" style="background:#06560020;border-color:#065f46;color:#6ee7b7">IBM COS</span>
+        <span class="arch-pill">Redis</span>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">IBM Orchestrate Multi-Agent Pipeline</div>
+    <div class="flow">
+      <div class="flow-step">📰 NewsAgent</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">💬 SocialMediaAgent</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">😊 SentimentAgent</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🏢 CompetitorAgent</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">📈 ForecastAgent</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">📋 ReportAgent</div>
+    </div>
+    <p style="font-size:11px;color:#64748b;margin-top:8px">LangChain ZERO_SHOT_REACT orchestrator • Each agent is a LangChain Tool backed by IBM Granite</p>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">RAG Pipeline (ChromaDB)</div>
+    <div class="flow">
+      <div class="flow-step">📄 Upload</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🔍 Extract Text</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">✂️ Chunk (512t)</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🧬 Embed (MiniLM)</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">💾 ChromaDB</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🔎 Semantic Search</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🤖 IBM Granite</div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">12 Production Features</div>
+    <div class="feature-grid">
+      <div class="feat"><div class="num">01</div><div class="name">Authentication</div><div class="desc">JWT login, register, profile, admin roles</div></div>
+      <div class="feat"><div class="num">02</div><div class="name">AI Dashboard</div><div class="desc">KPIs, charts, trends, predictions overview</div></div>
+      <div class="feat"><div class="num">03</div><div class="name">Data Collection</div><div class="desc">News, Reddit, Twitter, RSS, CSV, PDF agents</div></div>
+      <div class="feat"><div class="num">04</div><div class="name">Multimodal Upload</div><div class="desc">PDF/CSV/Image OCR — indexed to ChromaDB</div></div>
+      <div class="feat"><div class="num">05</div><div class="name">AI Analysis</div><div class="desc">SWOT, trends, pain points, recommendations</div></div>
+      <div class="feat"><div class="num">06</div><div class="name">Predictions</div><div class="desc">Demand, growth, risk, sentiment forecasts</div></div>
+      <div class="feat"><div class="num">07</div><div class="name">Competitor Compare</div><div class="desc">Table + radar chart + AI narrative</div></div>
+      <div class="feat"><div class="num">08</div><div class="name">Charts</div><div class="desc">Area, bar, pie, radar, line, heatmap</div></div>
+      <div class="feat"><div class="num">09</div><div class="name">AI Chat (RAG)</div><div class="desc">ChromaDB retrieval + IBM Granite answers</div></div>
+      <div class="feat"><div class="num">10</div><div class="name">Report Generator</div><div class="desc">Download PDF, DOCX, PPTX reports</div></div>
+      <div class="feat"><div class="num">11</div><div class="name">AI Alerts</div><div class="desc">Sentiment, risk, competitor, demand alerts</div></div>
+      <div class="feat"><div class="num">12</div><div class="name">Admin Panel</div><div class="desc">Users, reports, analytics, ChromaDB stats</div></div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Project Structure</div>
+    <div class="file-tree">
+<span class="dir">intelligent-market-research/</span>
+├── <span class="dir">backend/</span>
+│   ├── <span class="dir">app/</span>
+│   │   ├── <span class="dir">agents/</span>         <span class="comment"># 6 IBM Orchestrate agents + orchestrator</span>
+│   │   ├── <span class="dir">core/</span>           <span class="comment"># config, database, security, deps</span>
+│   │   ├── <span class="dir">models/</span>         <span class="comment"># 10 SQLAlchemy ORM models</span>
+│   │   ├── <span class="dir">routes/</span>         <span class="comment"># 11 FastAPI route modules</span>
+│   │   ├── <span class="dir">schemas/</span>        <span class="comment"># Pydantic request/response schemas</span>
+│   │   ├── <span class="dir">services/</span>       <span class="comment"># watsonx, chroma, report, storage</span>
+│   │   └── <span class="file">main.py</span>         <span class="comment"># FastAPI app entry point</span>
+│   ├── <span class="dir">alembic/</span>            <span class="comment"># DB migrations</span>
+│   ├── <span class="dir">database/</span>
+│   │   └── <span class="file">seed.py</span>         <span class="comment"># Demo data seeder</span>
+│   ├── <span class="file">.env.example</span>
+│   ├── <span class="file">requirements.txt</span>
+│   └── <span class="file">Dockerfile</span>
+├── <span class="dir">frontend/</span>
+│   ├── <span class="dir">src/</span>
+│   │   ├── <span class="dir">components/layout/</span>  <span class="comment"># Layout, Sidebar, TopBar</span>
+│   │   ├── <span class="dir">pages/</span>             <span class="comment"># 11 page components</span>
+│   │   │   ├── <span class="dir">auth/</span>          <span class="comment"># Login, Register</span>
+│   │   │   └── <span class="file">*.tsx</span>          <span class="comment"># Dashboard, Analysis, Chat, etc.</span>
+│   │   ├── <span class="dir">store/</span>             <span class="comment"># Zustand auth store</span>
+│   │   ├── <span class="dir">lib/</span>               <span class="comment"># Axios client, nav config</span>
+│   │   ├── <span class="file">App.tsx</span>            <span class="comment"># React Router routes</span>
+│   │   └── <span class="file">index.css</span>          <span class="comment"># Tailwind + custom layers</span>
+│   ├── <span class="file">tailwind.config.js</span>
+│   ├── <span class="file">vite.config.ts</span>
+│   ├── <span class="file">package.json</span>
+│   └── <span class="file">Dockerfile</span>
+├── <span class="dir">database/</span>
+│   └── <span class="file">sample_data.csv</span>
+├── <span class="file">docker-compose.yml</span>     <span class="comment"># Postgres + Redis + Chroma + Backend + Frontend</span>
+└── <span class="file">README.md</span>              <span class="comment"># Full deployment guide</span>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Key API Endpoints (/api/v1)</div>
+    <table class="api-table">
+      <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/auth/register</code></td><td>Register new user</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/auth/login</code></td><td>JWT login</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/dashboard/overview</code></td><td>KPIs, sentiment, trending</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/analysis/full</code></td><td>Full IBM Granite analysis</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/predictions/generate</code></td><td>AI forecasts with confidence</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/chat/message</code></td><td>RAG chat (ChromaDB + Granite)</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/uploads/</code></td><td>Upload &amp; index files</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/reports/{id}/download/{fmt}</code></td><td>Download PDF/DOCX/PPTX</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/competitors/compare</code></td><td>AI competitor comparison</td></tr>
+      <tr><td><span class="method post">POST</span></td><td><code>/orchestrate/workflow</code></td><td>IBM Orchestrate agent workflow</td></tr>
+      <tr><td><span class="method get">GET</span></td><td><code>/admin/stats</code></td><td>System monitoring</td></tr>
+    </table>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Quick Start Commands</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>🐳 Docker (Production)</h3>
+        <ul>
+          <li>cp backend/.env.example backend/.env</li>
+          <li>Edit .env → add WATSONX_API_KEY</li>
+          <li>docker-compose up --build -d</li>
+          <li>Open http://localhost:3000</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚡ Local Dev</h3>
+        <ul>
+          <li>docker-compose up postgres redis chromadb -d</li>
+          <li>cd backend &amp;&amp; pip install -r requirements.txt</li>
+          <li>python database/seed.py</li>
+          <li>uvicorn app.main:app --reload</li>
+          <li>cd frontend &amp;&amp; npm i &amp;&amp; npm run dev</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Demo Credentials</div>
+    <div class="cred">
+      <p>🔑 <strong>Admin:</strong> admin@marketresearch.ai  /  Admin@123</p>
+      <p>👤 <strong>Analyst:</strong> analyst@marketresearch.ai  /  Analyst@123</p>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Complete Tech Stack</div>
+    <div class="grid-3">
+      <div class="card">
+        <h3>🤖 IBM AI Stack</h3>
+        <ul>
+          <li>IBM watsonx.ai</li>
+          <li>Granite 13B Chat v2</li>
+          <li>Granite 13B Instruct v2</li>
+          <li>IBM Orchestrate (LangChain)</li>
+          <li>IBM Cloud Object Storage</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚙️ Backend</h3>
+        <ul>
+          <li>FastAPI + Uvicorn</li>
+          <li>SQLAlchemy (async)</li>
+          <li>PostgreSQL 16</li>
+          <li>ChromaDB + HuggingFace</li>
+          <li>LangChain 0.1</li>
+          <li>Redis + Celery</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🎨 Frontend</h3>
+        <ul>
+          <li>React 18 + TypeScript</li>
+          <li>Vite 5</li>
+          <li>Tailwind CSS 3</li>
+          <li>Recharts (8 chart types)</li>
+          <li>Zustand state mgmt</li>
+          <li>Framer Motion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section">
+    <div class="section-title">Database Tables (10)</div>
+    <div class="grid-4">
+      <div class="card" style="padding:10px 12px"><h3>users</h3><p>Auth, roles, profile</p></div>
+      <div class="card" style="padding:10px 12px"><h3>reports</h3><p>AI-generated reports</p></div>
+      <div class="card" style="padding:10px 12px"><h3>market_data</h3><p>News, social, reviews</p></div>
+      <div class="card" style="padding:10px 12px"><h3>competitors</h3><p>Company profiles</p></div>
+      <div class="card" style="padding:10px 12px"><h3>reviews</h3><p>Customer reviews</p></div>
+      <div class="card" style="padding:10px 12px"><h3>predictions</h3><p>AI forecasts</p></div>
+      <div class="card" style="padding:10px 12px"><h3>alerts</h3><p>AI notifications</p></div>
+      <div class="card" style="padding:10px 12px"><h3>chat_histories</h3><p>RAG chat logs</p></div>
+      <div class="card" style="padding:10px 12px"><h3>uploads</h3><p>File index status</p></div>
+      <div class="card" style="padding:10px 12px"><h3>analytics</h3><p>Event tracking</p></div>
+    </div>
+  </div>
+
+  <footer>Made with IBM Bob  •  IBM watsonx.ai Hackathon 2024</footer>
+</div>
+</body>
+</html>
